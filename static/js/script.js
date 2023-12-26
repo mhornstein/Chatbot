@@ -6,7 +6,6 @@ function updateChat(user, server) {
 
     // Scroll to the bottom of the chat history
     chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-    }
 }
 
 // Load chat history from localStorage

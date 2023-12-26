@@ -1,10 +1,11 @@
 import pandas as pd
-from state_machine_module.user_states import *
-
-texts = pd.read_csv('./texts/texts.csv').set_index('id')
+import state_machine_module.user_states as states
+import state_machine_module.messages as messages
 
 def reply(user_input, user_state):
-    if INITIAL_STATE == user_state:
-        return "1", texts.loc[1][0]
+    if states.INITIAL_STATE == user_state:
+        return states.INITIAL_STATE_PENDING_YES, messages.HELLO_MSG
+    elif states.INITIAL_STATE_PENDING_YES and user_input != messages.YES:
+        return states.INITIAL_STATE_PENDING_YES, messages.INVALID_RESPONSE + messages.HELLO_MSG
     else:
-        return "2", texts
+        return "dummy", "dummy"

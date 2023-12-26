@@ -4,3 +4,5 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/api/routes/__pycache__/chat.cpython-310.pyc

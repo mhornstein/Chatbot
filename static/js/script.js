@@ -1,7 +1,8 @@
 function updateChat(user, server) {
     const chatHistoryDiv = document.getElementById('chat-history');
     chatHistoryDiv.innerHTML += `<p><strong>את/ה:</strong> ${user}</p>`;
-    chatHistoryDiv.innerHTML += `<p>${server} <strong>:Snowflake</strong></p>`;
+    let formattedServerText = server.replace(/\n/g, '<br>'); // replace new line with break
+    chatHistoryDiv.innerHTML += `<p><strong>סנואופלייק:</strong> ${formattedServerText}</p>`;
 }
 
 // Load chat history from localStorage

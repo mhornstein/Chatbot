@@ -23,4 +23,27 @@ def reply(user_input, user_state):
         if user_input != messages.I_AM_BACK:
             return states.SENTENCE_COMPLETEION_DATA_PENDING_I_AM_BACK, messages.INVALID_RESPONSE
         else:
+            return states.SENTENCE_COMPLETEION_RESULTS_PENDING_ANSWER, messages.SENTENCE_COMPLETEION_RESULTS_INQUIRY
+
+    elif states.SENTENCE_COMPLETEION_RESULTS_PENDING_ANSWER == user_state:
+        return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INTERESTING + messages.MAIN_MENU
+
+    # main menu - only option 1 enabled
+    elif states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE == user_state:
+        if user_input == '1':
+            return states.OPTION_1_PENDING_CHOISE, messages.OPTION_1_ENABLED
+        elif user_input == '2':
+            return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.OPTION_2_DISABLED + '\n' + messages.MAIN_MENU
+        elif user_input == '3':
+            return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.OPTION_3_DISABLED + '\n' + messages.MAIN_MENU
+        else: # Invalid choise
+            return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INVALID_RESPONSE + messages.MAIN_MENU
+
+    # main menu - option 1 - workers review
+    if states.OPTION_1_PENDING_CHOISE == user_state:
+        if user_input == '1':
             return "dummy", "dummy"
+        elif user_input == '2':
+            return "dummy", "dummy"
+        else: # Invalid choise
+            return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INVALID_RESPONSE + messages.MAIN_MENU

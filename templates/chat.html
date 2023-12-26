@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <img src="logo.png" alt="Company Logo" id="logo"> <!-- Update src with your logo path -->
+    <img src="{{ url_for('static', filename='images/logo_good_snowflake.png') }}" alt="Logo" id="logo">
     <div class="chat-container">
         <button type="button" id="clearBtn">Clear Chat</button> <!-- Moved Clear button -->
         <div id="chat-history">

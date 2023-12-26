@@ -3,6 +3,10 @@ function updateChat(user, server) {
     chatHistoryDiv.innerHTML += `<p><strong>את/ה:</strong> ${user}</p>`;
     let formattedServerText = server.replace(/\n/g, '<br>'); // replace new line with break
     chatHistoryDiv.innerHTML += `<p><strong>סנואופלייק:</strong> ${formattedServerText}</p>`;
+
+    // Scroll to the bottom of the chat history
+    chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+    }
 }
 
 // Load chat history from localStorage

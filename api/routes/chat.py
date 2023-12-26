@@ -15,6 +15,8 @@ def chat():
     # Logic to determine the server's reply based on user input and state
     new_state, server_reply = state_machine.reply(user_input, user_state)
 
+    print(user_state, ' -> ', new_state)
+
     # Include the updated state in the response
     response_data = {
         'serverReply': server_reply,

@@ -20,3 +20,11 @@ SENTENCE_COMPLETTION_NOTEBOOK_EXPLAINATION = '''
 אני מניחה שתרצו לשחזר את המילים שאבדו באמצעות מודל כמו HeBERT, ולכן הכנתי עבורכם מחברת Colab בנושא. קראו וסיימו את המחברת, וכשתסיימו – כתבו כאן "חזרתי". אני אמתין לכם כאן.
 לחצו <a href="https://colab.research.google.com/drive/1TkylQp2h3df07aoWjisTXuf3-vMJ42Mi?usp=sharing">כאן</a> כדי לעבור למחברת.
 '''
+
+SENTENCE_COMPLETTION_DATA_EXPLAINATION = '''
+מעולה!
+עכשיו בטח תרצו להציץ לתיקי העובדים ולשחזר את המשפטים שנהרסו.
+אני באופן אישי ממליצה לטעון את תיקי העובדים כ-Dataframe במחברת ולהמשיך משם, מאחר והפרטים בעצם שמורים כקובץ csv שנמצא <a href="https://docs.google.com/spreadsheets/d/1XDwPr2rkwFrE5XxBwsrmee2eGvmZGxmj51ApPtXxPfk/export?format=csv">כאן</a>.
+
+אני אחכה לכם כאן עד שתסיימו. כשתסיימו – פשוט כתבו חזרתי.
+'''

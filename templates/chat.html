@@ -7,14 +7,14 @@
 <body>
     <img src="{{ url_for('static', filename='images/logo_good_snowflake.png') }}" alt="Logo" id="logo">
     <div class="chat-container">
-        <button type="button" id="clearBtn">Clear Chat</button> <!-- Moved Clear button -->
+        <button type="button" id="clearBtn">נקה צ'אט</button> <!-- Moved Clear button -->
         <div id="chat-history">
             <!-- Chat history will be displayed here -->
         </div>
         <form id="chatForm">
             <input type="hidden" id="userState" name="userState" value="initialState">
-            <input type="text" id="messageInput" placeholder="Say something..." required>
-            <button type="submit">Send</button>
+            <input type="text" id="messageInput" placeholder="כתבו משהו..." required>
+            <button type="submit">שלח</button>
         </form>
     </div>
 

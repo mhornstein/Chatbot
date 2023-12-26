@@ -1,8 +1,8 @@
 // Function to update chat on the screen
 function updateChat(user, server) {
     const chatHistoryDiv = document.getElementById('chat-history');
-    chatHistoryDiv.innerHTML += `<p><strong>You:</strong> ${user}</p>`;
-    chatHistoryDiv.innerHTML += `<p><strong>Server:</strong> ${server}</p>`;
+    chatHistoryDiv.innerHTML += `<p><strong>את/ה:</strong> ${user}</p>`;
+    chatHistoryDiv.innerHTML += `<p>${server} <strong>:Snowflake</strong></p>`;
 }
 
 // Load chat history from localStorage

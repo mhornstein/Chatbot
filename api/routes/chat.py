@@ -1,8 +1,6 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 
-# Create a Blueprint named 'chat_bp'
-chat_bp = Blueprint('chat_bp', __name__,
-                    template_folder='templates')
+chat_bp = Blueprint('chat_bp', __name__, template_folder='templates')
 
 @chat_bp.route('/')
 def home():
@@ -10,8 +8,8 @@ def home():
 
 @chat_bp.route('/chat', methods=['POST'])
 def chat():
-    user_input = request.form['message']
-    user_state = request.form['userState']  # Retrieve the user state from the form
+    user_input = request.json['message']
+    user_state = request.json['userState']  # Retrieve the user state from the JSON request
 
     # Logic to determine the server's reply based on user input and state
     if user_input.lower() == 'dummy' and user_state == 'initialState':
@@ -22,4 +20,10 @@ def chat():
         new_state = 'default'
 
     # Include the updated state in the response
-    return render_template('chat.html', user_input=user_input, server_reply=server_reply, user_state=new_state)
+    response_data = {
+        'serverReply': server_reply,
+        'userState': new_state,
+    }
+
+    # Render the JSON response
+    return jsonify(response_data)

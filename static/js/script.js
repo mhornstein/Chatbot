@@ -1,4 +1,3 @@
-// Function to update chat on the screen
 function updateChat(user, server) {
     const chatHistoryDiv = document.getElementById('chat-history');
     chatHistoryDiv.innerHTML += `<p><strong>את/ה:</strong> ${user}</p>`;
@@ -21,15 +20,38 @@ function saveChat(user, server) {
 }
 
 // Handle form submission
-document.getElementById('chatForm').onsubmit = function(event) {
+document.getElementById('chatForm').onsubmit = async function(event) {
     event.preventDefault();
     const userInput = document.getElementById('messageInput').value;
-    const serverReply = userInput.toLowerCase() === 'boris' ? 'Hi' : 'Bye';
+    const userState = document.getElementById('userState').value;
 
-    updateChat(userInput, serverReply);
-    saveChat(userInput, serverReply);
+    // Send the user input and userState to the Flask server
+    const response = await fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: userInput,
+            userState: userState,
+        }),
+    });
 
-    document.getElementById('messageInput').value = ''; // Clear input field
+    if (response.ok) {
+        const responseData = await response.json();
+        const serverReply = responseData.serverReply;
+        const newUserState = responseData.userState;
+
+        updateChat(userInput, serverReply);
+        saveChat(userInput, serverReply);
+
+        // Update the hidden input with the new userState
+        document.getElementById('userState').value = newUserState;
+
+        document.getElementById('messageInput').value = ''; // Clear input field
+    } else {
+        alert(error.message);
+    }
 }
 
 function clearChatHistory() {

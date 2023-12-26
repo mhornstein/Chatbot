@@ -32,5 +32,19 @@ document.getElementById('chatForm').onsubmit = function(event) {
     document.getElementById('messageInput').value = ''; // Clear input field
 }
 
+function clearChatHistory() {
+    // Clear the display
+    const chatHistoryDiv = document.getElementById('chat-history');
+    chatHistoryDiv.innerHTML = '';
+
+    // Clear the localStorage
+    localStorage.removeItem('chatHistory');
+}
+
+// Event listener for the Clear button
+document.getElementById('clearBtn').onclick = function() {
+    clearChatHistory();
+};
+
 // Load chat history when the page loads
 window.onload = loadChatHistory;

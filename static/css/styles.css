@@ -22,6 +22,19 @@ body {
     justify-content: space-between;
     background: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1); /* subtle shadow for depth */
+    position: relative; /* For absolute positioning of the clear button */
+}
+
+#clearBtn {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px; /* Optional: for rounded corners */
 }
 
 #chat-history {

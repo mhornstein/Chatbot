@@ -29,7 +29,6 @@ document.getElementById('chatForm').onsubmit = async function(event) {
     const userInput = document.getElementById('messageInput').value;
     const userState = document.getElementById('userState').value;
 
-    // Send the user input and userState to the Flask server
     const response = await fetch('/chat', {
         method: 'POST',
         headers: {

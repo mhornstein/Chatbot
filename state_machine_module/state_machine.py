@@ -40,10 +40,23 @@ def reply(user_input, user_state):
             return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INVALID_RESPONSE + messages.MAIN_MENU
 
     # main menu - option 1 - workers review
-    if states.OPTION_1_PENDING_CHOISE == user_state:
+    elif states.OPTION_1_PENDING_CHOISE == user_state:
         if user_input == '1':
-            return "dummy", "dummy"
+            return states.SENTIMENT_ANALYSIS_NOTEBOOK_PENDING_I_AM_BACK, messages.SENTIMENT_ANALYSIS_NOTEBOOK_EXPLAINATION
         elif user_input == '2':
             return "dummy", "dummy"
         else: # Invalid choise
             return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INVALID_RESPONSE + messages.MAIN_MENU
+
+    # sentiment analysis
+    elif states.SENTIMENT_ANALYSIS_NOTEBOOK_PENDING_I_AM_BACK == user_state:
+        if user_input != messages.I_AM_BACK:
+            return states.SENTIMENT_ANALYSIS_NOTEBOOK_PENDING_I_AM_BACK, messages.INVALID_RESPONSE
+        else:
+            return states.SENTIMENT_ANALYSIS_NOTEBOOK_PENDING_I_AM_BACK, messages.SENTIMENT_ANALYSIS_NOTEBOOK_EXPLAINATION
+
+    elif states.SENTIMENT_ANALYSIS_DATA_PENDING_I_AM_BACK == user_state:
+        if user_input != messages.I_AM_BACK:
+            return states.SENTIMENT_ANALYSIS_NOTEBOOK_PENDING_I_AM_BACK, messages.INVALID_RESPONSE
+        else:
+            return states.MAIN_MENU_OPTION_1_ENABLED_PENDING_CHOISE, messages.INTERESTING + messages.MAIN_MENU

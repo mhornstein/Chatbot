@@ -14,6 +14,8 @@ HELLO_MSG = '''
 כיתבו "כן" וליחצו שלח כדי שאדע שאתם מוכנים.
 '''
 
+# Sentence completion
+
 SENTENCE_COMPLETTION_NOTEBOOK_EXPLAINATION = '''
 נהדר!
 מאחר והבנתי שאתם נמצאים בישראל ולא בפינלנד איתי, תרגמתי עבורכם את המסמכים מפינלנדית לעברית.
@@ -34,6 +36,42 @@ SENTENCE_COMPLETEION_RESULTS_INQUIRY = '''
 איזה יופי שחזרתם!
 האם יש כבר דמויות שאתם חושדים בהם? ספרו לי...
 '''
+
+# sentiment anlysis
+
+SENTIMENT_ANALYSIS_NOTEBOOK_EXPLAINATION = '''
+נפלא!
+נראה שאתם רוצים לנתח חוות-דעת והתייחסויות של עובדים בנוגע לעובדים אחרים. זיהוי סנטימנט עוזר לחסוך לנו עבודה: במקום לקרוא משפט-משפט הוא מאפשר לנו ליצור תהליך אוטומטי במהלכו נזהה מהו הרגש העולה מטקסט.
+אני מניחה שגם את זה תרצו לעשות באמצעות מודל כמו HeBERT, ולכן יצרתי עבורכם מחברת Colab בנושא. קראו ובצעו את המחברת, וכשתסיימו – כתבו כאן "חזרתי". אני אמתין לכם כאן.
+לחצו <a href="https://colab.research.google.com/drive/1u1eJ0XzmWr6DVMqFkwD6x9nuAlMfVIpd?usp=sharing">כאן</a> כדי לעבור למחברת.
+'''
+
+SENTIMENT_ANALYSIS_DATA_EXPLAINATION = '''מדהים!
+עכשיו בטח תרצו להציץ בחוות הדעת.
+אני באופן אישי ממליצה לטעון אותם כ-Dataframe במחברת ולהמשיך משם, מאחר וחוות הדעת בעצם שמורים כקובץ csv שנמצא <a href="https://docs.google.com/spreadsheets/d/1CbQJNsliX2zqc1esHw8AaadSbFhPhNG_zVDUAziVRiM/edit?usp=sharing">כאן</a>.
+
+אני אחכה לכם כאן עד שתסיימו. כשתסיימו – פשוט כתבו חזרתי.
+'''
+
+# entity extraction
+
+ENTITY_EXTRACTION_NOTEBOOK_EXPLAINATION = '''
+מרגש!
+מאחר והבנתי שאתם נמצאים בישראל ולא בפינלנד איתי, תרגמתי עבורכם את המסמכים מפינלנדית לעברית.
+בתהליך התרגום חלק מהמילים הלכו לאיבוד...
+אני מניחה שתרצו לשחזר את המילים שאבדו באמצעות מודל כמו HeBERT, ולכן הכנתי עבורכם מחברת Colab בנושא. קראו וסיימו את המחברת, וכשתסיימו – כתבו כאן "חזרתי". אני אמתין לכם כאן.
+לחצו <a href="https://colab.research.google.com/drive/1TkylQp2h3df07aoWjisTXuf3-vMJ42Mi?usp=sharing">כאן</a> כדי לעבור למחברת.
+'''
+
+ENTITY_EXTRACTION_DATA_EXPLAINATION = '''
+משמח!
+עכשיו בטח תרצו להציץ לתיקי העובדים ולשחזר את המשפטים שנהרסו.
+אני באופן אישי ממליצה לטעון את תיקי העובדים כ-Dataframe במחברת ולהמשיך משם, מאחר והפרטים בעצם שמורים כקובץ csv שנמצא <a href="https://docs.google.com/spreadsheets/d/1XDwPr2rkwFrE5XxBwsrmee2eGvmZGxmj51ApPtXxPfk/export?format=csv">כאן</a>.
+
+אני אחכה לכם כאן עד שתסיימו. כשתסיימו – פשוט כתבו חזרתי.
+'''
+
+# main menu
 
 MAIN_MENU = '''
 מה תרצו לעשות עכשיו? ביחרו באפשרות המתאימה:

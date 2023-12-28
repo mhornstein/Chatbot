@@ -6,5 +6,7 @@ messages = {
     5: 'text 5',
     6: 'text 6',
     7: 'text 7',
-    8: 'text 8'
+    8: 'text 8',
+    9: 'text 9',
+    10: 'text 10'
 }

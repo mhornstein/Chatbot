@@ -52,7 +52,11 @@ def do_move(user_name, agent_state, user_state, user_input):
     elif agent_state == 6:
         if user_input == '1':
             return user_name, 7, user_state, agentMessages[7], None
-        else: # TODO support also option 2 + invalid option
+        elif user_input == '2':
+            return user_name, 9, user_state, agentMessages[9], None
+        elif user_input == '3':
+            return user_name, 5, user_state, agentMessages[5], None
+        else:
             return user_name, 6, user_state, INVALID_INPUT, None
         
     elif agent_state == 7:
@@ -73,6 +77,27 @@ def do_move(user_name, agent_state, user_state, user_input):
                 pass # In any other case - leave user state as it is
             
             return user_name, 6, user_state, agentMessages[6], None
+
+    elif agent_state == 9:
+        if user_input != I_AM_BACK:
+            return user_name, 9, user_state, INVALID_INPUT, None
+        else:
+            return user_name, 10, user_state, INVALID_INPUT, None
+    
+    elif agent_state == 10:
+        if user_input != I_AM_BACK:
+            return user_name, 10, user_state, INVALID_INPUT, None
+        else:
+            if user_state == 1:
+                user_state = 4
+            elif user_state == 2:
+                user_state = 3
+            else:
+                pass # In any other case - leave user state as it is
+            
+            return user_name, 6, user_state, agentMessages[6], None
+
+
     
     else:
         return user_name, 100, 100, 'Invalid state', None

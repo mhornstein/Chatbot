@@ -27,7 +27,7 @@ body {
     direction: rtl; /* Right to left */
 }
 
-#clearBtn {
+#initBtn {
     position: absolute;
     top: 10px;
     left: 10px; /* Adjusted for RTL */

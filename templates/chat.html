@@ -7,13 +7,11 @@
 <body>
     <img src="{{ url_for('static', filename='images/logo_good_snowflake.png') }}" alt="Logo" id="logo">
     <div class="chat-container">
-        <button type="button" id="clearBtn">נקה צ'אט</button>
+        <button type="button" id="initBtn">אפס צ'אט</button>
         <div id="chat-history">
             <!-- Chat history will be displayed here -->
         </div>
         <form id="chatForm">
-            <!-- TOOD: move user state to local storage. it is kept here only for easier dev and debug purpose -->
-            <input type="hidden" id="userState" name="userState" value="initial state">
             <input type="text" id="messageInput" placeholder="כתבו משהו..." required>
             <button type="submit">שלח</button>
         </form>

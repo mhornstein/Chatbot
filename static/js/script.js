@@ -1,75 +1,118 @@
-function updateChat(user, server) {
-    const chatHistoryDiv = document.getElementById('chat-history');
-    chatHistoryDiv.innerHTML += `<p><strong>את/ה:</strong> ${user}</p>`;
-    let formattedServerText = server.replace(/\n/g, '<br>'); // replace new line with break
-    chatHistoryDiv.innerHTML += `<p><strong>סנואופלייק:</strong> ${formattedServerText}</p>`;
+function initializeStates() {
+    if (localStorage.getItem('userState') === null) {
+        localStorage.setItem('userState', '0');
+    }
 
-    // Scroll to the bottom of the chat history
-    chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+    if (localStorage.getItem('agentState') === null) {
+        localStorage.setItem('agentState', '0');
+    }
+
+    if (localStorage.getItem('userName') === null) {
+        localStorage.setItem('userName', 'None');
+    }
 }
 
-// Load chat history from localStorage
+function updateChat(user, server, image) {
+    const chatHistoryDiv = document.getElementById('chat-history');
+    chatHistoryDiv.innerHTML += `<p><strong>User:</strong> ${user}</p>`;
+    let formattedServerText = server.replace(/\n/g, '<br>'); // replace new line with break
+    chatHistoryDiv.innerHTML += `<p><strong>Server:</strong> ${formattedServerText}</p>`;
+    if (image) {
+        // Assuming image is a base64 encoded string
+        chatHistoryDiv.innerHTML += `<img src="data:image/jpeg;base64,${image}" alt="Agent Image" style="max-width:100%;"/>`;
+    }
+    chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to the bottom of the chat history
+}
+
 function loadChatHistory() {
     const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
     history.forEach(chat => {
-        updateChat(chat.user, chat.server);
+        updateChat(chat.user, chat.server, chat.image);
     });
 }
 
-// Save chat to localStorage
-function saveChat(user, server) {
-    const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    history.push({user, server});
-    localStorage.setItem('chatHistory', JSON.stringify(history));
+function saveChat(userInput, serverReply, image) {
+    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+    const chat = {
+        user: userInput,
+        server: serverReply,
+        image: image // This is the base64 encoded image string
+    };
+
+    chatHistory.push(chat);
+
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
 }
 
-// Handle form submission
 document.getElementById('chatForm').onsubmit = async function(event) {
     event.preventDefault();
-    const userInput = document.getElementById('messageInput').value;
-    const userState = document.getElementById('userState').value;
 
+    const userInput = document.getElementById('messageInput').value;
+
+    let userState = parseInt(localStorage.getItem('userState') || '0');
+    let agentState = parseInt(localStorage.getItem('agentState') || '0');
+    let userName = localStorage.getItem('userName') || 'None';
+
+    // Construct the request payload with all required fields
+    const payload = {
+        user_name: userName,
+        user_input: userInput,
+        user_state: userState,
+        agent_state: agentState
+    };
+
+    // Make the POST request to the server
     const response = await fetch('/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            message: userInput,
-            userState: userState,
-        }),
+        body: JSON.stringify(payload),
     });
 
     if (response.ok) {
         const responseData = await response.json();
-        const serverReply = responseData.serverReply;
-        const newUserState = responseData.userState;
 
-        updateChat(userInput, serverReply);
-        saveChat(userInput, serverReply);
+        const updatedAgentState = parseInt(responseData.updated_agent_state);
+        const updatedUserState = parseInt(responseData.updated_user_state);
+        const agentStrOutput = responseData.agent_str_output;
+        const agentImageOutput = responseData.agent_image_output; // This might be a URL or base64 string
+        const userName = responseData.user_name;
 
-        // Update the hidden input with the new userState
-        document.getElementById('userState').value = newUserState;
+        updateChat(userInput, agentStrOutput, agentImageOutput);
+        saveChat(userInput, agentStrOutput, agentImageOutput);
 
-        document.getElementById('messageInput').value = ''; // Clear input field
+        localStorage.setItem('userState', updatedUserState);
+        localStorage.setItem('agentState', updatedAgentState);
+        localStorage.setItem('userName', userName);
+
+        document.getElementById('messageInput').value = ''; // Clear the input field for the next message
     } else {
-        alert(error.message);
+        // Handle errors
+        const error = await response.text();
+        alert(`Error: ${error}`);
     }
 }
 
-function clearChatHistory() {
+function initChat() {
     // Clear the display
     const chatHistoryDiv = document.getElementById('chat-history');
     chatHistoryDiv.innerHTML = '';
 
     // Clear the localStorage
     localStorage.removeItem('chatHistory');
+
+    localStorage.removeItem('userState');
+    localStorage.removeItem('agentState');
+    localStorage.removeItem('userName');
 }
 
 // Event listener for the Clear button
-document.getElementById('clearBtn').onclick = function() {
-    clearChatHistory();
+document.getElementById('initBtn').onclick = function() {
+    initChat();
 };
 
 // Load chat history when the page loads
+initializeStates();
 window.onload = loadChatHistory;

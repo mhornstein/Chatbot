@@ -48,6 +48,12 @@ body {
     margin-top: 40px; /* Add space at the top so content doesn't go under the clear button */
 }
 
+#chat-history img {
+    height: 75%; /* images will take up 20% of the chat-history's height */
+    width: auto; /* maintain aspect ratio */
+    display: block; /* remove inline characteristics */
+}
+
 #chatForm {
     display: flex;
     padding: 10px;

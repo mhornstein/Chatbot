@@ -19,7 +19,7 @@ function updateChat(user, server, image) {
     chatHistoryDiv.innerHTML += `<p><strong>Server:</strong> ${formattedServerText}</p>`;
     if (image) {
         // Assuming image is a base64 encoded string
-        chatHistoryDiv.innerHTML += `<img src="data:image/jpeg;base64,${image}" alt="Agent Image" style="max-width:100%;"/>`;
+        chatHistoryDiv.innerHTML += `<img src="data:image/jpeg;base64,${image}" alt="Agent Image"/>`;
     }
     chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to the bottom of the chat history
 }

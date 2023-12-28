@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
+import base64
+import os
 
 chat_bp = Blueprint('chat_bp', __name__, template_folder='templates')
 
@@ -18,8 +20,13 @@ def chat():
     updated_agent_state = 1  # some processing
     updated_user_state = 2  # some processing
     agent_str_output = "c"  # some processing
-    agent_image_output = None  # some processing, convert to suitable format if necessary
     user_name = 'some name'
+    
+    # Dummy example for image creation (the image may be None if no exists)
+    image_path = os.path.join('static', 'images', 'logo_good_snowflake.png')
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+    agent_image_output = encoded_string  # this is now a base64 string of the image
 
     # Construct response
     response = {

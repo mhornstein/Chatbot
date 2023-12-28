@@ -6,3 +6,4 @@
 /.idea/vcs.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /state_machine/__pycache__/*.pyc
+/api/routes/__pycache__/*.pyc

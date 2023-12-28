@@ -5,7 +5,4 @@
 /.idea/modules.xml
 /.idea/vcs.xml
 /.idea/inspectionProfiles/Project_Default.xml
-/api/routes/__pycache__/chat.cpython-310.pyc
-/state_machine_module/__pycache__/state_machine.cpython-310.pyc
-/state_machine_module/__pycache__/user_states.cpython-310.pyc
-/state_machine_module/__pycache__/messages.cpython-310.pyc
+/state_machine/__pycache__/*.pyc

@@ -142,8 +142,24 @@ def do_move(user_name, agent_state, user_state, user_input):
     elif agent_state == 20:
         if user_input == '1':
             return user_name, 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
+        elif user_input == '2':
+            return user_name, 22, user_state, agentMessages[22], None
         else:
             return user_name, 20, user_state, INVALID_INPUT, None
+    
+    elif agent_state == 22:
+        if user_input == 'success': # TODO change with required check
+            pass # TODO continue from here
+        else:
+            return user_name, 23, user_state, agentMessages[23], None
+        
+    elif agent_state == 23:
+        if user_input == YES:
+            return user_name, 22, user_state, agentMessages[22], None
+        elif user_input == NO:
+            return user_name, 20, user_state, agentMessages[20], None
+        else:
+            return user_name, 23, user_state, INVALID_INPUT, None
 
     else:
         return user_name, 100, 100, 'Invalid state', None

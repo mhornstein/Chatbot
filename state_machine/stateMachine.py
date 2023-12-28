@@ -47,8 +47,10 @@ def do_move(user_name, agent_state, user_state, user_input):
         if user_input == '1':
             return user_name, 6, user_state, agentMessages[6], None
         elif user_input == '2':
-            if user_state in [0, 1, 2, 4]:
+            if user_state in [0, 1, 2, 4]: # User didn't complete required preliminaries stages
                 return user_name, 5, user_state, agentMessages[11] + DELIM + agentMessages[5], None
+            elif user_state >= 6: # User had already completed this stage
+                return user_name, 14, user_state, agentMessages[14], None
             else:
                 return user_name, 12, user_state, agentMessages[12], None
         else: # TODO support also option 3 + invalid option

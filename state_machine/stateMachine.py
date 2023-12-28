@@ -53,7 +53,12 @@ def do_move(user_name, agent_state, user_state, user_input):
                 return user_name, 14, user_state, agentMessages[14], None
             else:
                 return user_name, 12, user_state, agentMessages[12], None
-        else: # TODO support also option 3 + invalid option
+        elif user_input == '3':
+            if user_state < 6:  # User didn't complete required preliminaries stages
+                return user_name, 5, user_state, agentMessages[16] + DELIM + agentMessages[5], None
+            else:
+                return user_name, 17, user_state, agentMessages[17], None 
+        else:
             return user_name, 5, user_state, INVALID_INPUT, None
         
     elif agent_state == 6:
@@ -121,6 +126,24 @@ def do_move(user_name, agent_state, user_state, user_input):
             return user_name, 15, user_state, INVALID_INPUT, None
         else:
             return user_name, 5, 6, agentMessages[5], None
+
+    elif agent_state == 17:
+        if user_input == 'success': # TODO change with required check
+            return user_name, 19, user_state, agentMessages[19], None
+        else:
+            return user_name, 5, user_state, agentMessages[18] + DELIM + agentMessages[5], None
+    
+    elif agent_state == 19:
+        if user_input != I_AM_BACK:
+            return user_name, 19, user_state, INVALID_INPUT, None
+        else:
+            return user_name, 20, user_state, agentMessages[20], None
+
+    elif agent_state == 20:
+        if user_input == '1':
+            return user_name, 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
+        else:
+            return user_name, 20, user_state, INVALID_INPUT, None
 
     else:
         return user_name, 100, 100, 'Invalid state', None

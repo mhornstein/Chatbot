@@ -1,85 +1,86 @@
 from state_machine.constants import *
 from state_machine.agentMessages import messages as agentMessages
 
-def do_move(user_name, agent_state, user_state, user_input):
+def do_move(agent_state, user_state, session_cache, user_input):
     """
     Executes a move in the bot's state machine, i.e. for the snowflake agent.
 
     Parameters:
-    - user_name (str): The name of the user interacting with the agent.
     - agent_state (int): The current state of the agent.
     - user_state (int): The current state of the user.
+    - session_cache (dict): A small key-value cache storing information by the state machine for its future use.
     - user_input (str): The input string from the user.
 
     Returns:
     Tuple containing:
-    - user_name (str): The name of the user.
     - updated_agent_state (int): The new state of the agent after the move.
     - updated_user_state (int): The new state of the user after the move.
     - agent_str_output (str): The textual output from the agent.
     - agent_image_output (Optional[str]): The encoded image output from the agent. This is optional and will be None if no image is required.
 
-    The function processes the given inputs to transition the agent and the user to their next respective states and produces the agent's textual and optional image output.
+    This function processes the given inputs to transition both the agent and the user to their next respective states and produces the agent's textual and, optionally, image output.
+    It also updates the session_cache in-place as needed by adding or removing keys.
     The image output is encoded and should be decoded for display or further processing.
     """
     if agent_state == 0:
-        return UNKNOWN_USENAME, 1, 0, agentMessages[1], None
+        return 1, 0, agentMessages[1], None
     
     elif agent_state == 1:
-        return user_input, 2, 0, agentMessages[2], None
+        session_cache[NAME] = user_input
+        return 2, 0, agentMessages[2], None
     
     elif agent_state == 2:
         if user_input != I_AM_BACK:
-            return user_name, 2, 0, INVALID_INPUT, None
+            return 2, 0, INVALID_INPUT, None
         else:
-            return user_name, 3, 0, agentMessages[3], None
+            return 3, 0, agentMessages[3], None
         
     elif agent_state == 3:
         if user_input != I_AM_BACK:
-            return user_name, 3, 0, INVALID_INPUT, None
+            return 3, 0, INVALID_INPUT, None
         else:
-            return user_name, 4, 1, agentMessages[4], None
+            return 4, 1, agentMessages[4], None
         
     elif agent_state == 4:
-        return user_name, 5, 1, agentMessages[5], None
+        return 5, 1, agentMessages[5], None
 
     elif agent_state == 5:
         if user_input == '1':
-            return user_name, 6, user_state, agentMessages[6], None
+            return 6, user_state, agentMessages[6], None
         elif user_input == '2':
             if user_state in [0, 1, 2, 4]: # User didn't complete required preliminaries stages
-                return user_name, 5, user_state, agentMessages[11] + DELIM + agentMessages[5], None
+                return 5, user_state, agentMessages[11] + DELIM + agentMessages[5], None
             elif user_state >= 6: # User had already completed this stage
-                return user_name, 14, user_state, agentMessages[14], None
+                return 14, user_state, agentMessages[14], None
             else:
-                return user_name, 12, user_state, agentMessages[12], None
+                return 12, user_state, agentMessages[12], None
         elif user_input == '3':
             if user_state < 6:  # User didn't complete required preliminaries stages
-                return user_name, 5, user_state, agentMessages[16] + DELIM + agentMessages[5], None
+                return 5, user_state, agentMessages[16] + DELIM + agentMessages[5], None
             else:
-                return user_name, 17, user_state, agentMessages[17], None 
+                return 17, user_state, agentMessages[17], None 
         else:
-            return user_name, 5, user_state, INVALID_INPUT, None
+            return 5, user_state, INVALID_INPUT, None
         
     elif agent_state == 6:
         if user_input == '1':
-            return user_name, 7, user_state, agentMessages[7], None
+            return 7, user_state, agentMessages[7], None
         elif user_input == '2':
-            return user_name, 9, user_state, agentMessages[9], None
+            return 9, user_state, agentMessages[9], None
         elif user_input == '3':
-            return user_name, 5, user_state, agentMessages[5], None
+            return 5, user_state, agentMessages[5], None
         else:
-            return user_name, 6, user_state, INVALID_INPUT, None
+            return 6, user_state, INVALID_INPUT, None
         
     elif agent_state == 7:
         if user_input != I_AM_BACK:
-            return user_name, 7, user_state, INVALID_INPUT, None
+            return 7, user_state, INVALID_INPUT, None
         else:
-            return user_name, 8, user_state, agentMessages[8], None
+            return 8, user_state, agentMessages[8], None
 
     elif agent_state == 8:
         if user_input != I_AM_BACK:
-            return user_name, 8, user_state, INVALID_INPUT, None
+            return 8, user_state, INVALID_INPUT, None
         else:
             if user_state == 1:
                 user_state = 2
@@ -88,17 +89,17 @@ def do_move(user_name, agent_state, user_state, user_input):
             else:
                 pass # In any other case - leave user state as it is
             
-            return user_name, 6, user_state, agentMessages[6], None
+            return 6, user_state, agentMessages[6], None
 
     elif agent_state == 9:
         if user_input != I_AM_BACK:
-            return user_name, 9, user_state, INVALID_INPUT, None
+            return 9, user_state, INVALID_INPUT, None
         else:
-            return user_name, 10, user_state, INVALID_INPUT, None
+            return 10, user_state, INVALID_INPUT, None
     
     elif agent_state == 10:
         if user_input != I_AM_BACK:
-            return user_name, 10, user_state, INVALID_INPUT, None
+            return 10, user_state, INVALID_INPUT, None
         else:
             if user_state == 1:
                 user_state = 4
@@ -107,59 +108,59 @@ def do_move(user_name, agent_state, user_state, user_input):
             else:
                 pass # In any other case - leave user state as it is
             
-            return user_name, 6, user_state, agentMessages[6], None
+            return 6, user_state, agentMessages[6], None
 
     elif agent_state == 12:
         if user_input == 'success': # TODO change with required check
-            return user_name, 14, user_state, agentMessages[14], None
+            return 14, user_state, agentMessages[14], None
         else:
-            return user_name, 5, user_state, agentMessages[13] + DELIM + agentMessages[5], None
+            return 5, user_state, agentMessages[13] + DELIM + agentMessages[5], None
     
     elif agent_state == 14:
         if user_input != I_AM_BACK:
-            return user_name, 14, user_state, INVALID_INPUT, None
+            return 14, user_state, INVALID_INPUT, None
         else:
-            return user_name, 15, user_state, agentMessages[15], None
+            return 15, user_state, agentMessages[15], None
     
     elif agent_state == 15:
         if user_input != I_AM_BACK:
-            return user_name, 15, user_state, INVALID_INPUT, None
+            return 15, user_state, INVALID_INPUT, None
         else:
-            return user_name, 5, 6, agentMessages[5], None
+            return 5, 6, agentMessages[5], None
 
     elif agent_state == 17:
         if user_input == 'success': # TODO change with required check
-            return user_name, 19, user_state, agentMessages[19], None
+            return 19, user_state, agentMessages[19], None
         else:
-            return user_name, 5, user_state, agentMessages[18] + DELIM + agentMessages[5], None
+            return 5, user_state, agentMessages[18] + DELIM + agentMessages[5], None
     
     elif agent_state == 19:
         if user_input != I_AM_BACK:
-            return user_name, 19, user_state, INVALID_INPUT, None
+            return 19, user_state, INVALID_INPUT, None
         else:
-            return user_name, 20, user_state, agentMessages[20], None
+            return 20, user_state, agentMessages[20], None
 
     elif agent_state == 20:
         if user_input == '1':
-            return user_name, 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
+            return 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
         elif user_input == '2':
-            return user_name, 22, user_state, agentMessages[22], None
+            return 22, user_state, agentMessages[22], None
         else:
-            return user_name, 20, user_state, INVALID_INPUT, None
+            return 20, user_state, INVALID_INPUT, None
     
     elif agent_state == 22:
         if user_input == 'success': # TODO change with required check
             pass # TODO continue from here
         else:
-            return user_name, 23, user_state, agentMessages[23], None
+            return 23, user_state, agentMessages[23], None
         
     elif agent_state == 23:
         if user_input == YES:
-            return user_name, 22, user_state, agentMessages[22], None
+            return 22, user_state, agentMessages[22], None
         elif user_input == NO:
-            return user_name, 20, user_state, agentMessages[20], None
+            return 20, user_state, agentMessages[20], None
         else:
-            return user_name, 23, user_state, INVALID_INPUT, None
+            return 23, user_state, INVALID_INPUT, None
 
     else:
-        return user_name, 100, 100, 'Invalid state', None
+        return 100, 100, 'Invalid state', None

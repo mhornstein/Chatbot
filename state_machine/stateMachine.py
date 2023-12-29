@@ -149,6 +149,8 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
         elif user_input == '2':
             return 22, user_state, agentMessages[22], None
+        elif user_input == '3':
+            return 28, user_state, agentMessages[28], None
         elif user_input == '4':
             return 5, user_state, agentMessages[5], None
         else:
@@ -190,6 +192,13 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 20, user_state, agentMessages[20], None
         else:
             return 26, user_state, INVALID_INPUT, None
+
+    elif agent_state == 28:
+        if user_input == 'success': # TODO change with required check
+            session_cache.pop(UNLOCKED_CAMERAS, None) # remove cameras info as this is no longer required for next states
+            return 30, 8, agentMessages[30], None 
+        else:
+            return 20, user_state, agentMessages[29] + DELIM + agentMessages[20], None  
 
     else:
         return 100, 100, 'Invalid state', None

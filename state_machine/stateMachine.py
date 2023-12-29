@@ -57,8 +57,10 @@ def do_move(agent_state, user_state, session_cache, user_input):
         elif user_input == '3':
             if user_state < 6:  # User didn't complete required preliminaries stages
                 return 5, user_state, agentMessages[16] + DELIM + agentMessages[5], None
-            else:
+            elif user_state == 6:
                 return 17, user_state, agentMessages[17], None 
+            else: # the user has already mentioned 2 suspects successfully
+                return 19, user_state, agentMessages[19], None 
         else:
             return 5, user_state, INVALID_INPUT, None
         
@@ -95,7 +97,7 @@ def do_move(agent_state, user_state, session_cache, user_input):
         if user_input != I_AM_BACK:
             return 9, user_state, INVALID_INPUT, None
         else:
-            return 10, user_state, INVALID_INPUT, None
+            return 10, user_state, agentMessages[10], None
     
     elif agent_state == 10:
         if user_input != I_AM_BACK:
@@ -126,7 +128,9 @@ def do_move(agent_state, user_state, session_cache, user_input):
         if user_input != I_AM_BACK:
             return 15, user_state, INVALID_INPUT, None
         else:
-            return 5, 6, agentMessages[5], None
+            if user_state < 6: # If this is the first time the user finishes this part
+                user_state = 6
+            return 5, user_state, agentMessages[5], None
 
     elif agent_state == 17:
         if user_input == 'success': # TODO change with required check
@@ -138,13 +142,15 @@ def do_move(agent_state, user_state, session_cache, user_input):
         if user_input != I_AM_BACK:
             return 19, user_state, INVALID_INPUT, None
         else:
-            return 20, user_state, agentMessages[20], None
+            return 20, 7, agentMessages[20], None
 
     elif agent_state == 20:
         if user_input == '1':
             return 20, user_state, agentMessages[21] + DELIM + agentMessages[20], None
         elif user_input == '2':
             return 22, user_state, agentMessages[22], None
+        elif user_input == '4':
+            return 5, user_state, agentMessages[5], None
         else:
             return 20, user_state, INVALID_INPUT, None
     

@@ -8,7 +8,7 @@ def do_move(agent_state, user_state, session_cache, user_input):
     Parameters:
     - agent_state (int): The current state of the agent.
     - user_state (int): The current state of the user.
-    - session_cache (dict): A small key-value cache storing information by the state machine for its future use.
+    - session_cache (dict): A small key-value cache storing information by the state machine for its future use. information stored as strings.
     - user_input (str): The input string from the user.
 
     Returns:
@@ -155,9 +155,13 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 20, user_state, INVALID_INPUT, None
     
     elif agent_state == 22:
-        if user_input == 'success':
-            session_cache[CAMERA] = user_input
-            return 24, user_state, agentMessages[24], None
+        if user_input == '1' or user_input == '2' or user_input == '3': # TODO change with required check
+            requested_camera = user_input
+            if was_camera_unlocked(requested_camera, session_cache):
+                return 20, user_state, agentMessages[27] + DELIM + agentMessages[20], None
+            else:
+                session_cache[REQUESTED_CAMERA] = requested_camera
+                return 24, user_state, agentMessages[24], None
         else:
             return 23, user_state, agentMessages[23], None
         
@@ -171,7 +175,9 @@ def do_move(agent_state, user_state, session_cache, user_input):
 
     elif agent_state == 24 or agent_state == 25:
         if user_input == 'success': # TODO change with required check
-            del session_cache[CAMERA] # remove camera id as it is no longer required
+            unlocked_camera = session_cache[REQUESTED_CAMERA]
+            update_cache_with_unlocked_camera(session_cache, unlocked_camera)
+            del session_cache[REQUESTED_CAMERA] # remove camera id as it is no longer required
             return 20, user_state, agentMessages[27] + DELIM + agentMessages[20], None
         else:
             return 26, user_state, agentMessages[26], None
@@ -180,10 +186,23 @@ def do_move(agent_state, user_state, session_cache, user_input):
         if user_input == '1':
             return 25, user_state, agentMessages[25], None
         elif user_input == '2':
-            del session_cache[CAMERA] # remove camera id as it is no longer required
+            del session_cache[REQUESTED_CAMERA] # remove camera id as it is no longer required
             return 20, user_state, agentMessages[20], None
         else:
             return 26, user_state, INVALID_INPUT, None
 
     else:
         return 100, 100, 'Invalid state', None
+    
+def was_camera_unlocked(camera, session_cache):
+    if UNLOCKED_CAMERAS not in session_cache:
+        return False
+    else:
+        cameras_list = session_cache[UNLOCKED_CAMERAS].split(COMMA_DELIM)
+        return camera in cameras_list
+
+def update_cache_with_unlocked_camera(session_cache, unlocked_camera):
+    if UNLOCKED_CAMERAS not in session_cache:
+        session_cache[UNLOCKED_CAMERAS] = unlocked_camera
+    else:
+        session_cache[UNLOCKED_CAMERAS] += COMMA_DELIM + unlocked_camera

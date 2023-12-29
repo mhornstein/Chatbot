@@ -21,5 +21,9 @@ messages = {
     20: 'text 20',
     21: 'text 21',
     22: 'text 22',
-    23: 'text 23'
+    23: 'text 23',
+    24: 'text 24',
+    25: 'text 25',
+    26: 'text 26',
+    27: 'text 27'
 }

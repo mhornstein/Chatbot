@@ -155,8 +155,9 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 20, user_state, INVALID_INPUT, None
     
     elif agent_state == 22:
-        if user_input == 'success': # TODO change with required check
-            pass # TODO continue from here
+        if user_input == 'success':
+            session_cache[CAMERA] = user_input
+            return 24, user_state, agentMessages[24], None
         else:
             return 23, user_state, agentMessages[23], None
         
@@ -167,6 +168,22 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 20, user_state, agentMessages[20], None
         else:
             return 23, user_state, INVALID_INPUT, None
+
+    elif agent_state == 24 or agent_state == 25:
+        if user_input == 'success': # TODO change with required check
+            del session_cache[CAMERA] # remove camera id as it is no longer required
+            return 20, user_state, agentMessages[27] + DELIM + agentMessages[20], None
+        else:
+            return 26, user_state, agentMessages[26], None
+        
+    elif agent_state == 26:
+        if user_input == '1':
+            return 25, user_state, agentMessages[25], None
+        elif user_input == '2':
+            del session_cache[CAMERA] # remove camera id as it is no longer required
+            return 20, user_state, agentMessages[20], None
+        else:
+            return 26, user_state, INVALID_INPUT, None
 
     else:
         return 100, 100, 'Invalid state', None

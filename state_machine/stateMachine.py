@@ -262,7 +262,7 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 45, user_state, INVALID_INPUT, None 
 
     else:
-        return 100, 100, 'Invalid state', None
+        return 0, 0, INVALID_STATE, None
     
 def was_camera_unlocked(camera, session_cache):
     if UNLOCKED_CAMERAS not in session_cache:

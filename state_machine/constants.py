@@ -10,5 +10,6 @@ UNLOCKED_CAMERAS = 'unlocked_cameras'
 
 # agent output
 INVALID_INPUT = 'אפשרות לא זמינה'
+INVALID_STATE = 'מצב בוט לא תקין. מבצע איתחול לבוט וחוזר למצב התחלתי ...'
 DELIM = '\n\n'
 COMMA_DELIM = ','

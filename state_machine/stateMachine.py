@@ -217,6 +217,10 @@ def do_move(agent_state, user_state, session_cache, user_input):
             return 35, user_state, agentMessages[35], None
         elif user_input == '2':
             return 38, user_state, agentMessages[38], None
+        elif user_input == '3':
+            return 41, user_state, agentMessages[41], None
+        elif user_input == '4':
+            return 45, user_state, agentMessages[45], None
         else:
             return 34, user_state, INVALID_INPUT, None
 
@@ -237,6 +241,25 @@ def do_move(agent_state, user_state, session_cache, user_input):
 
     elif agent_state == 39:
         return 34, user_state, agentMessages[40] + DELIM + agentMessages[34], None
+    
+    elif agent_state == 41 or agent_state == 44:
+        return 42, user_state, agentMessages[42], None # TODO create image according to prompt
+    
+    elif agent_state == 42:
+        if user_input == YES:
+            return 44, user_state, agentMessages[44], None
+        elif user_input == NO:
+            return 34, user_state, agentMessages[43] + DELIM + agentMessages[34], None
+        else:
+            return 42, user_state, INVALID_INPUT, None
+
+    elif agent_state == 45:
+        if user_input == YES:
+            return 0, 0, agentMessages[46], None
+        elif user_input == NO:
+            return 34, user_state, agentMessages[34], None
+        else:
+            return 45, user_state, INVALID_INPUT, None 
 
     else:
         return 100, 100, 'Invalid state', None

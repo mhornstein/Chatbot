@@ -255,6 +255,7 @@ def do_move(agent_state, user_state, session_cache, user_input):
 
     elif agent_state == 45:
         if user_input == YES:
+            session_cache.clear()
             return 0, 0, agent_messages[46], None
         elif user_input == NO:
             return 34, user_state, agent_messages[34], None

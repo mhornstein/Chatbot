@@ -1,3 +1,6 @@
+const AGENT_STATE_COOKIE_NAME = 'agent_state';
+const EVIL_AGENT_STATES = ['30', '31', '32'];
+
 function updateChat(user, server, image) {
     const chatHistoryDiv = document.getElementById('chat-history');
     chatHistoryDiv.innerHTML += `<p><strong>User:</strong> ${user}</p>`;
@@ -33,6 +36,29 @@ function saveChat(userInput, serverReply, image) {
     localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
 }
 
+function getCookie(name) {
+    let cookieArray = document.cookie.split(';');
+    for(let i = 0; i < cookieArray.length; i++) {
+        let cookiePair = cookieArray[i].split('=');
+        if(name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    return null;
+}
+
+function updatePageStyle() {
+    let agent_state = getCookie(AGENT_STATE_COOKIE_NAME);
+
+    if (EVIL_AGENT_STATES.includes(agent_state)) { 
+        document.getElementById('logo').src = '/static/images/logo_bad_snowflake.png';
+        document.body.style.backgroundColor = '#f85e5b';
+    } else {
+        document.getElementById('logo').src = '/static/images/logo_good_snowflake.png';
+        document.body.style.backgroundColor = '#f9f9f9';
+    }
+}
+
 document.getElementById('chatForm').onsubmit = async function(event) {
     event.preventDefault();
 
@@ -42,8 +68,7 @@ document.getElementById('chatForm').onsubmit = async function(event) {
         user_input: userInput
     };
 
-    // Make the POST request to the server
-    const response = await fetch('/chat', {
+     const response = await fetch('/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -61,6 +86,8 @@ document.getElementById('chatForm').onsubmit = async function(event) {
         saveChat(userInput, agentStrOutput, agentImageOutput);
 
         document.getElementById('messageInput').value = ''; // Clear the input field for the next message
+
+        updatePageStyle();
     } else {
         // Handle errors
         const error = await response.text();

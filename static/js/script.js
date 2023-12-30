@@ -64,6 +64,7 @@ document.getElementById('chatForm').onsubmit = async function(event) {
     event.preventDefault();
 
     const userInput = document.getElementById('messageInput').value;
+    let agentStrOutput = '', agentImageOutput = null; // default value for image is null
 
     const payload = {
         user_input: userInput
@@ -81,25 +82,21 @@ document.getElementById('chatForm').onsubmit = async function(event) {
         if (response.ok) {
             const responseData = await response.json();
 
-            const agentStrOutput = responseData.agent_str_output;
-            const agentImageOutput = responseData.agent_image_output; // This might be a URL or base64 string
-
-            updateChat(userInput, agentStrOutput, agentImageOutput);
-            saveChat(userInput, agentStrOutput, agentImageOutput);
-
-            document.getElementById('messageInput').value = ''; // Clear the input field for the next message
-
-            updatePageStyle();
+            agentStrOutput = responseData.agent_str_output;
+            agentImageOutput = responseData.agent_image_output; // This might be a URL or base64 string
         } else {
-            // Handle errors
             const error = await response.text();
-            alert(`Error: ${error}`);
+            agentStrOutput = ERROR_MESSAGE + error;
         }
     } catch (error) {
-        const error_message = ERROR_MESSAGE + error.message
-        updateChat(userInput, error_message, null);
-        saveChat(userInput, error_message, null);
-        document.getElementById('messageInput').value = '';
+        agentStrOutput = ERROR_MESSAGE + error.message;
+    } finally {
+        updateChat(userInput, agentStrOutput, agentImageOutput);
+        updatePageStyle();
+
+         saveChat(userInput, agentStrOutput, agentImageOutput);
+
+        document.getElementById('messageInput').value = ''; // Clear the input field for the next message
     }
 }
 

@@ -212,6 +212,32 @@ def do_move(agent_state, user_state, session_cache, user_input):
         else:
             return 32, user_state, agentMessages[32], None
 
+    elif agent_state == 34:
+        if user_input == '1':
+            return 35, user_state, agentMessages[35], None
+        elif user_input == '2':
+            return 38, user_state, agentMessages[38], None
+        else:
+            return 34, user_state, INVALID_INPUT, None
+
+    elif agent_state == 35:
+        if user_input != I_AM_BACK:
+            return 35, user_state, INVALID_INPUT, None
+        else:
+            return 36, user_state, agentMessages[36], None
+
+    elif agent_state == 36:
+        return 34, user_state, agentMessages[37] + DELIM + agentMessages[34], None
+    
+    elif agent_state == 38:
+        if user_input != I_AM_BACK:
+            return 38, user_state, INVALID_INPUT, None
+        else:
+            return 39, user_state, agentMessages[39], None
+
+    elif agent_state == 39:
+        return 34, user_state, agentMessages[40] + DELIM + agentMessages[34], None
+
     else:
         return 100, 100, 'Invalid state', None
     

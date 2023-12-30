@@ -33,4 +33,10 @@ messages = {
     32: 'text 32',
     33: 'text 33',
     34: 'text 34',
+    35: 'text 35',
+    36: 'text 36',
+    37: 'text 37',
+    38: 'text 38',
+    39: 'text 39',
+    40: 'text 40'
 }

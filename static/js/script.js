@@ -1,5 +1,6 @@
 const AGENT_STATE_COOKIE_NAME = 'agent_state';
 const EVIL_AGENT_STATES = ['30', '31', '32'];
+const ERROR_MESSAGE = 'זוהי שגיאה שאינה חלק מהתרגיל. פנו למדריך/ה לעזרה. פרטי השגיאה: ';
 
 function updateChat(user, server, image) {
     const chatHistoryDiv = document.getElementById('chat-history');
@@ -68,30 +69,37 @@ document.getElementById('chatForm').onsubmit = async function(event) {
         user_input: userInput
     };
 
-     const response = await fetch('/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-    });
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
 
-    if (response.ok) {
-        const responseData = await response.json();
+        if (response.ok) {
+            const responseData = await response.json();
 
-        const agentStrOutput = responseData.agent_str_output;
-        const agentImageOutput = responseData.agent_image_output; // This might be a URL or base64 string
+            const agentStrOutput = responseData.agent_str_output;
+            const agentImageOutput = responseData.agent_image_output; // This might be a URL or base64 string
 
-        updateChat(userInput, agentStrOutput, agentImageOutput);
-        saveChat(userInput, agentStrOutput, agentImageOutput);
+            updateChat(userInput, agentStrOutput, agentImageOutput);
+            saveChat(userInput, agentStrOutput, agentImageOutput);
 
-        document.getElementById('messageInput').value = ''; // Clear the input field for the next message
+            document.getElementById('messageInput').value = ''; // Clear the input field for the next message
 
-        updatePageStyle();
-    } else {
-        // Handle errors
-        const error = await response.text();
-        alert(`Error: ${error}`);
+            updatePageStyle();
+        } else {
+            // Handle errors
+            const error = await response.text();
+            alert(`Error: ${error}`);
+        }
+    } catch (error) {
+        const error_message = ERROR_MESSAGE + error.message
+        updateChat(userInput, error_message, null);
+        saveChat(userInput, error_message, null);
+        document.getElementById('messageInput').value = '';
     }
 }
 

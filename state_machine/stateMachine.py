@@ -198,7 +198,19 @@ def do_move(agent_state, user_state, session_cache, user_input):
             session_cache.pop(UNLOCKED_CAMERAS, None) # remove cameras info as this is no longer required for next states
             return 30, 8, agentMessages[30], None 
         else:
-            return 20, user_state, agentMessages[29] + DELIM + agentMessages[20], None  
+            return 20, user_state, agentMessages[29] + DELIM + agentMessages[20], None
+    
+    elif agent_state == 30:
+        if user_input != I_AM_BACK:
+            return 30, user_state, INVALID_INPUT, None
+        else:
+            return 31, user_state, agentMessages[31], None
+        
+    elif agent_state == 31 or agent_state == 32:
+        if user_input == 'success': # TODO change with required check
+            return 34, 9, agentMessages[33] + DELIM + agentMessages[34], None
+        else:
+            return 32, user_state, agentMessages[32], None
 
     else:
         return 100, 100, 'Invalid state', None

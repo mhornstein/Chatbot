@@ -7,8 +7,8 @@ function updateChat(user, server, image) {
     chatHistoryDiv.innerHTML += `<p><strong>User:</strong> ${user}</p>`;
 
     if (image) {
-        // Assuming image is a base64 encoded string
-        chatHistoryDiv.innerHTML += `<p><strong>Server:</strong></p> <img src="data:image/jpeg;base64,${image}" alt="Agent Image"/>`;
+        chatHistoryDiv.innerHTML += `<p><strong>Server:</strong></p> <img src="${image}" alt="Agent Image"/>`;
+        // chatHistoryDiv.innerHTML += `<p><strong>Server:</strong></p> <img src="data:image/jpeg;base64,${image}" alt="Agent Image"/>`;
     }
     
     let formattedServerText = server.replace(/\n/g, '<br>'); // replace new line with break

@@ -146,7 +146,7 @@ def do_move(agent_state, user_state, session_cache, user_input):
 
     elif agent_state == 20:
         if user_input == '1':
-            return 20, user_state, agent_messages[21] + DELIM + agent_messages[20], None
+            return 20, user_state, agent_messages[21] + DELIM + agent_messages[20], 'static/images/map.png'
         elif user_input == '2':
             return 22, user_state, agent_messages[22], None
         elif user_input == '3':

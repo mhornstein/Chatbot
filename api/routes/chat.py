@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template, request, jsonify, make_response
-import base64
-import os
 from state_machine.stateMachine import do_move
 
 AGENT_STATE = 'agent_state'

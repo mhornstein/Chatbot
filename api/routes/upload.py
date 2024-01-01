@@ -14,4 +14,4 @@ def upload_file():
 
     # TODO: compare text + image to the required image. the required image is identified by the camera id
 
-    return jsonify({"message": "הגעתם ל-95% דיוק! כל הכבוד! הקוד למצלמה הוא: 5463"}) # reply example
+    return jsonify("הגעתם ל-95% דיוק! כל הכבוד! הקוד למצלמה הוא: 5463") # reply example

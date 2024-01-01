@@ -1,5 +1,6 @@
 from state_machine.constants import *
 from state_machine.agentMessages import messages as agent_messages
+import base64
 
 def do_move(agent_state, user_state, session_cache, user_input):
     """
@@ -16,11 +17,17 @@ def do_move(agent_state, user_state, session_cache, user_input):
     - updated_agent_state (int): The new state of the agent after the move.
     - updated_user_state (int): The new state of the user after the move.
     - agent_str_output (str): The textual output from the agent.
-    - agent_image_output (Optional[str]): The encoded image output from the agent. This is optional and will be None if no image is required.
+    - agent_image_output (Optional[str]): The image output from the agent. This is optional and will be None if no image is required.
 
     This function processes the given inputs to transition both the agent and the user to their next respective states and produces the agent's textual and, optionally, image output.
     It also updates the session_cache in-place as needed by adding or removing keys.
-    The image output is encoded and should be decoded for display or further processing.
+
+    The image output can be one of the following:
+    1. A Relative Path: For example, 'static/images/logo_good_snowflake.png'
+    2. An Absolute Path: A URL to an image on the internet, such as: https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_1028x578.v1605559903.png
+    3. An Encoded Version of the Image: For example, f"data:image/jpeg;base64,{base64.b64encode(open('static/images/logo_good_snowflake.png', 'rb').read()).decode('utf-8')}"
+
+    Note: Please avoid using encoding for large images, as the textual content of the chat is saved in the local storage at the client-side and it has a capacity limit.
     """
     if agent_state == 0:
         return 1, 0, agent_messages[1], None

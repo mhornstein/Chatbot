@@ -1,0 +1,47 @@
+# Chatbot Installation and Setup Guide
+
+## Installation and Requirements
+
+### Python Version
+**Tested Version**: Python 3.10.8 (Likely compatible with other Python 3 versions).
+
+### Required Packages
+- Install the necessary packages listed in `requirements.txt`.
+- You can also do it by running the following command in the project's main directory:
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+## Running the Chatbot
+
+### Development Environment
+1. Navigate to the project's main directory.
+2. Run the chatbot using the command:
+   ```bash
+   python main.py
+   ```
+3. The chatbot will be available on **port 5000**.
+
+#### Additional Notes for Development:
+- To access the chatbot from other computers, ensure the required ports are open in the EC2 instance.
+- In an Ubuntu environment, consider using:
+  ```bash
+  sudo nohup python main.py &
+  ```
+  for background running.
+
+### Production Environment
+1. Modify the `main.py` file for production use:
+   ```python
+   if __name__ == '__main__':
+       app.run(debug=False, port=80)
+   ```
+2. Run the chatbot using:
+   ```bash
+   python main.py
+   ```
+   Alternatively, for background execution, use:
+     ```bash
+     sudo nohup python main.py &
+     ```
+3. The chatbot will now be available on the default **port 80** (Ensure that port 80 is accessible on your EC2 instance).

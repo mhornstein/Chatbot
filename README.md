@@ -60,3 +60,10 @@ Run:
 sudo kill -9 16904 16905 16906
 ```
 Make sure to substitude the ids with the those you found earlier.
+
+### Optional: If there are still troubles and the server cannot be reached...
+Update firewall rules:
+```
+sudo ufw allow 80/tcp
+sudo ufw allow 80
+```

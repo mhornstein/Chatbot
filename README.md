@@ -9,7 +9,7 @@
 - Install the necessary packages listed in `requirements.txt`.
 - You can also do it by running the following command in the project's main directory:
   ```bash
-  pip install -r requirements.txt
+  sudo pip3 install -r requirements.txt
   ```
 
 ## Running the Chatbot
@@ -18,7 +18,7 @@
 1. Navigate to the project's main directory.
 2. Run the chatbot using the command:
    ```bash
-   python main.py
+   sudo python main.py
    ```
 3. The chatbot will be available on **port 5000**.
 

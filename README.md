@@ -31,10 +31,11 @@
   for background running.
 
 ### Production Environment
-1. Modify the `main.py` file for production use:
+1. Add the following import to `main.py`: ```from waitress import serve```.
+  Modify the `main.py` file for production use:
    ```python
-   if __name__ == '__main__':
-       app.run(debug=False, port=80)
+  if __name__ == '__main__':
+      serve(app, host="0.0.0.0", port=80)
    ```
 2. Run the chatbot using:
    ```bash
